@@ -59,9 +59,9 @@ fun main(args: Array<String>) {
  * Рассчитать время в секундах, прошедшее с начала суток (30035 в данном случае).
  */
 fun seconds(hours: Int, minutes: Int, seconds: Int): Int {
-    val HoursToSeconds = hours * 3600
-    val MinutesToSeconds= minutes * 60
-    val time = seconds + HoursToSeconds + MinutesToSeconds
+    val hoursToSeconds = hours * 3600
+    val minutesToSeconds = minutes * 60
+    val time = seconds + hoursToSeconds + minutesToSeconds
     return time
 }
 
@@ -73,12 +73,10 @@ fun seconds(hours: Int, minutes: Int, seconds: Int): Int {
  * 1 сажень = 3 аршина = 48 вершков, 1 вершок = 4.445 см.
  */
 fun lengthInMeters(sagenes: Int, arshins: Int, vershoks: Int): Double {
-    //4.445 см = 0.04445 м; 1 аршин = 16 вершков
-    val vershoksMetres: Double = vershoks * 0.04445
-    val arshinsMetres: Double = arshins * 16 * 0.04445
-    val sagenesMetres: Double = sagenes * 48 * 0.04445
-    val length = vershoksMetres + arshinsMetres + sagenesMetres
-    return length
+    val arshinsVershoks = arshins * 16
+    val sagenesVershoks = sagenes * 48
+    return (vershoks+ arshinsVershoks + sagenesVershoks) * 0.04445
+
 }
 
 /**
@@ -88,12 +86,9 @@ fun lengthInMeters(sagenes: Int, arshins: Int, vershoks: Int): Double {
  * Вывести значение того же угла в радианах (например, 0.63256).
  */
 fun angleInRadian(grad: Int, min: Int, sec: Int): Double {
-    //перевод секунд, минут в градусы
-    val minGrad = min/60.0
-    val secGrad = sec/3600.0
-    //
-    val rad = (minGrad + secGrad + grad) * PI/180.0
-    return rad
+    val minGrad = min / 60.0
+    val secGrad = sec / 3600.0
+    return (minGrad + secGrad + grad) * PI / 180.0
 }
 
 /**
@@ -103,10 +98,10 @@ fun angleInRadian(grad: Int, min: Int, sec: Int): Double {
  * Например, расстояние между (3, 0) и (0, 4) равно 5
  */
 fun trackLength(x1: Double, y1: Double, x2: Double, y2: Double): Double {
-    val x = abs(x2-x1)
-    val y = abs(y2-y1)
-    val length: Double = sqrt(x*x+y*y)
-    return length
+    val x = abs(x2 - x1)
+    val y = abs(y2 - y1)
+    return sqrt(x * x + y * y)
+
 }
 
 /**
@@ -116,9 +111,9 @@ fun trackLength(x1: Double, y1: Double, x2: Double, y2: Double): Double {
  * Определить третью цифру справа в этом числе (в данном случае 8).
  */
 fun thirdDigit(number: Int): Int {
-    val hundred = number/100 //находим hundred - число-сотню (состоит из 3 цифр)
-    val thirdDigit = hundred % 10
-    return thirdDigit
+    val hundred = number / 100
+    return hundred % 10
+
 }
 
 /**
@@ -129,10 +124,10 @@ fun thirdDigit(number: Int): Int {
  * Определите время поезда в пути в минутах (в данном случае 216).
  */
 fun travelMinutes(hoursDepart: Int, minutesDepart: Int, hoursArrive: Int, minutesArrive: Int): Int {
-    val timeDepart = hoursDepart*60 + minutesDepart
-    val timeArrive = hoursArrive*60 + minutesArrive
-    val timeInTransit = timeArrive - timeDepart
-    return timeInTransit
+    val timeDepart = hoursDepart * 60 + minutesDepart
+    val timeArrive = hoursArrive * 60 + minutesArrive
+    return timeArrive - timeDepart
+
 }
 
 /**
@@ -143,10 +138,7 @@ fun travelMinutes(hoursDepart: Int, minutesDepart: Int, hoursArrive: Int, minute
  * Например, 100 рублей под 10% годовых превратятся в 133.1 рубля
  */
 fun accountInThreeYears(initial: Int, percent: Int): Double {
-    val year1: Double = (initial * percent/100 + initial).toDouble()
-    val year2: Double = year1 * percent/100 + year1
-    val year3: Double = year2 * percent/100 +year2
-    return year3
+    return initial * Math.pow(1 + percent / 100.0, 3.0)
 }
 
 /**
@@ -156,12 +148,12 @@ fun accountInThreeYears(initial: Int, percent: Int): Double {
  * Необходимо вывести число, полученное из заданного перестановкой цифр в обратном порядке (например, 874).
  */
 fun numberRevert(number: Int): Int {
-    val digit1 = number/100 //вычисление цифр в числе
-    val digit2 = (number%100)/10
-    val digit3 = number%10
-    val endDigit1 = digit1 //конвертация цифр в сотни, десятки, единицы. 1-я цифра стоит на третьем месте,; 2-я переводится в десятки и стоит на втором; 3-я переводится в сотые и стоит на первом.
-    val endDigit2 = digit2*10
-    val endDigit3 = digit3*100
-    val endNumber = endDigit1+endDigit2+endDigit3
-    return endNumber
+    val digit1 = number / 100
+    val digit2 = (number % 100) / 10
+    val digit3 = number % 10
+    val endDigit1 = digit1
+    val endDigit2 = digit2 * 10
+    val endDigit3 = digit3 * 100
+    return endDigit1 + endDigit2 + endDigit3
+
 }
