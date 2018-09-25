@@ -2,7 +2,6 @@
 package lesson3.task1
 
 import kotlin.math.sqrt
-//
 
 /**
  * Пример
