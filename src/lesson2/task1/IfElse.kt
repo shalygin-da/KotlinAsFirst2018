@@ -4,6 +4,7 @@ package lesson2.task1
 import lesson1.task1.discriminant
 import kotlin.math.abs
 import kotlin.math.max
+import kotlin.math.min
 import kotlin.math.sqrt
 
 /**
@@ -64,15 +65,12 @@ fun minBiRoot(a: Double, b: Double, c: Double): Double {
  * вернуть строку вида: «21 год», «32 года», «12 лет».
  */
 fun ageDescription(age: Int): String {
- val    n = age%10
     return when {
-        (age in 11..14) -> "$age лет"
-        (age in 111..114) -> "$age лет"
-        (n == 1) -> "$age год"
-        (n in 2..4) -> "$age года"
-        (n in 5..9) -> "$age лет"
-        (n == 0) -> "$age лет"
-        else -> "invalid age"
+        age % 100 in 11..14 -> "$age лет"
+        age % 10 == 1 -> "$age год"
+        age % 10 in 2..4 -> "$age года"
+        age % 10 in 5..9 -> "$age лет"
+        else -> "$age лет"
         }
 }
 
@@ -99,13 +97,15 @@ fun timeForHalfWay(t1: Double, v1: Double,
 fun whichRookThreatens(kingX: Int, kingY: Int,
                        rookX1: Int, rookY1: Int,
                        rookX2: Int, rookY2: Int): Int {
-    return when {
-        kingX==rookX1 && kingY==rookY2 || kingX==rookX2 && kingY==rookY1 -> 3
-        kingX==rookX1 && kingX==rookX2 || kingY==rookY1 && kingY==rookY2 -> 3
-        kingX==rookX1 || kingY==rookY1 -> 1
-        kingX==rookX2 || kingY==rookY2 -> 2
+    val a = when {
+        kingX == rookX1 || kingY == rookY1  -> 1
         else -> 0
+        }
+    return when {
+        kingY == rookY2 || kingX == rookX2 -> a+2
+        else -> a
     }
+
 }
 
 /**
@@ -121,12 +121,13 @@ fun whichRookThreatens(kingX: Int, kingY: Int,
 fun rookOrBishopThreatens(kingX: Int, kingY: Int,
                           rookX: Int, rookY: Int,
                           bishopX: Int, bishopY: Int): Int {
-    return when {
-        kingX==rookX && abs(kingX-bishopX) == abs(kingY-bishopY) -> 3
-        kingY==rookY && abs(kingX-bishopX) == abs(kingY-bishopY) -> 3
-        kingX==rookX || kingY==rookY -> 1
-        abs(kingX-bishopX) == abs(kingY-bishopY) -> 2
+    val a = when {
+        kingX == rookX || kingY == rookY -> 1
         else -> 0
+    }
+    return when {
+        abs(kingX - bishopX) == abs(kingY - bishopY) -> a+2
+        else -> a
     }
 }
 
@@ -150,10 +151,8 @@ fun triangleKind(a: Double, b: Double, c: Double): Int = TODO()
  */
 fun segmentLength(a: Int, b: Int, c: Int, d: Int): Int {
     return when {
-        ((a >= c) && (d >= b)) -> b - a
-        ((c >= a) && (b >= d)) -> d - c
-        ((b >= c) && (a <= c)) -> b - c
-        ((d >= a) && (b >= c)) -> d - a
+        max(a,c) == min(b,d) -> 0
+        max(a,c) - min(b,d) < 0 -> min(b,d) - max(a,c)
         else -> -1
-    }
+        }
 }
