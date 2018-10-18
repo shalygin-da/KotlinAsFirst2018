@@ -71,7 +71,7 @@ fun ageDescription(age: Int): String {
         age % 10 in 2..4 -> "$age года"
         age % 10 in 5..9 -> "$age лет"
         else -> "$age лет"
-        }
+    }
 }
 
 /**
