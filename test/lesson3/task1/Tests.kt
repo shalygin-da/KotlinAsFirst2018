@@ -61,6 +61,7 @@ class Tests {
         assertEquals(4, digitCountInNumber(5373393, 3))
     }
 
+
     @Test
     @Tag("Trivial")
     fun digitNumber() {

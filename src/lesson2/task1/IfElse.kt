@@ -98,8 +98,10 @@ fun whichRookThreatens(kingX: Int, kingY: Int,
                        rookX1: Int, rookY1: Int,
                        rookX2: Int, rookY2: Int): Int {
     val a: Int
-    if (kingX == rookX1 || kingY == rookY1)  a = 1
-    else a = 0
+    if (kingX == rookX1 || kingY == rookY1)
+        a = 1
+    else
+        a = 0
     if (kingY == rookY2 || kingX == rookX2) return a + 2
     else return a
 }
