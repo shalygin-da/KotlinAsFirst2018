@@ -109,14 +109,17 @@ fun fib(n: Int): Int {
  * минимальное число k, которое делится и на m и на n без остатка
  */
 fun lcm(m: Int, n: Int): Int {
-    var k = 0
-    for (i in (max(n, m)..m * n)) {
-        if (i % n == 0 && i % m == 0) {
-            k = i
-            break
-        } else continue
+    var numN = n
+    var numM = m
+    var answer = 1
+    for (k in 2..max(m, n)) {
+        while ((numN % k == 0) && (numM % k == 0)) {
+            answer *= k
+            numM /= k
+            numN /= k
+        }
     }
-    return k
+    return answer * numM * numN
 }
 
 
@@ -127,7 +130,7 @@ fun lcm(m: Int, n: Int): Int {
  */
 fun minDivisor(n: Int): Int {
     var div = n
-    for (i in (2..n)) {
+    for (i in (2..sqrt(n.toDouble()).toInt())) {
         if (n % i == 0) {
             div = i
             break
@@ -143,7 +146,7 @@ fun minDivisor(n: Int): Int {
  */
 fun maxDivisor(n: Int): Int {
     var div = 1
-    for (i in (n - 1 downTo 1)) {
+    for (i in (n - 1 downTo (sqrt(n.toDouble()).toInt()))) {
         if (n % i == 0) {
             div = i
             break
@@ -159,14 +162,8 @@ fun maxDivisor(n: Int): Int {
  * Взаимно простые числа не имеют общих делителей, кроме 1.
  * Например, 25 и 49 взаимно простые, а 6 и 8 -- нет.
  */
-fun isCoPrime(m: Int, n: Int): Boolean {
-    for (i in (2..min(m, n))) {
-        if (m % i == 0 && n % i == 0) {
-            return false
-        } else continue
-    }
-    return true
-}
+fun isCoPrime(m: Int, n: Int): Boolean =
+        lcm(m, n) == m * n
 
 /**
  * Простая
@@ -176,8 +173,8 @@ fun isCoPrime(m: Int, n: Int): Boolean {
  * Например, для интервала 21..28 21 <= 5*5 <= 28, а для интервала 51..61 квадрата не существует.
  */
 fun squareBetweenExists(m: Int, n: Int): Boolean {
-    for (i in 1..sqrt(n.toDouble()).toInt()) {
-        if (m <= sqr(i) && sqr(i) <= n) {
+    for (i in 0..sqrt(n.toDouble()).toInt()) {
+        if (sqr(i) in m..n) {
             return true
         } else continue
     }
@@ -241,19 +238,11 @@ fun cos(x: Double, eps: Double): Double = kotlin.TODO()
  * Использовать операции со строками в этой задаче запрещается.
  */
 fun revert(n: Int): Int {
-    var number = n
-    var count = 1
-    var aidDigit: Int
-    var reverted = 0
-    while (number > 9) {
-        number /= 10
-        count++
-    }
-    number = n
-    for (i in 1..count) {
-        aidDigit = number % pow(10.0, i.toDouble()).toInt()
-        while (aidDigit >= 10) aidDigit /= 10
-        reverted += aidDigit * pow(10.0, (count - i).toDouble()).toInt()
+    var aidDigit = n / 10
+    var reverted = n % 10
+    while (aidDigit > 0) {
+        reverted = reverted * 10 + aidDigit % 10
+        aidDigit /= 10
     }
     return reverted
 }
@@ -268,24 +257,8 @@ fun revert(n: Int): Int {
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun isPalindrome(n: Int): Boolean {
-    var count = 1
-    var number = n
-    var digit1: Int
-    var digit2: Int
-    while (n >= 10) {
-        number /= 10
-        count++
-    }
-    for (i in 1..count) {
-        digit1 = n / pow(10.0, (count - i).toDouble()).toInt() % 10
-        digit2 = n % pow(10.0, i.toDouble()).toInt()
-        while (digit2 >= 10) digit2 /= 10
-        if (digit1 != digit2) return false
-        else continue
-    }
-    return true
-}
+fun isPalindrome(n: Int): Boolean =
+        revert(n) == n
 
 /**
  * Средняя
@@ -299,7 +272,7 @@ fun hasDifferentDigits(n: Int): Boolean {
     var number = n
     var firstDigit: Int
     var nextDigit: Int
-    while (number > 9) {
+    while (digitNumber(number) > 1) {
         firstDigit = number % 10
         number /= 10
         nextDigit = number % 10

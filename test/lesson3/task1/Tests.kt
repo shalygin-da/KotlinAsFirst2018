@@ -110,7 +110,7 @@ class Tests {
         assertEquals(97, minDivisor(97))
         assertEquals(7, minDivisor(49))
         assertEquals(17, minDivisor(8653))
-        assertEquals(2124679 , minDivisor(2124679 ))
+        assertEquals(2124679, minDivisor(2124679))
         assertEquals(1073676287, minDivisor(1073676287))
         assertEquals(Int.MAX_VALUE, minDivisor(Int.MAX_VALUE))
     }
@@ -124,7 +124,7 @@ class Tests {
         assertEquals(17, maxDivisor(34))
         assertEquals(7, maxDivisor(49))
         assertEquals(509, maxDivisor(8653))
-        assertEquals(1 , maxDivisor(2124679 ))
+        assertEquals(1, maxDivisor(2124679))
         assertEquals(1, maxDivisor(1073676287))
         assertEquals(1, maxDivisor(Int.MAX_VALUE))
     }
@@ -143,6 +143,7 @@ class Tests {
     @Test
     @Tag("Easy")
     fun squareBetweenExists() {
+        assertTrue(squareBetweenExists(0, 0))
         assertTrue(squareBetweenExists(1, 1))
         assertTrue(squareBetweenExists(21, 28))
         assertTrue(squareBetweenExists(36, 48))
@@ -192,6 +193,7 @@ class Tests {
     @Test
     @Tag("Normal")
     fun revert() {
+        assertEquals(764400556, revert(655004467))
         assertEquals(87431, revert(13478))
         assertEquals(0, revert(0))
         assertEquals(3, revert(3))
