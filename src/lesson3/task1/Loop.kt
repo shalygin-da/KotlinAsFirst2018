@@ -5,6 +5,7 @@ package lesson3.task1
 import com.sun.xml.internal.bind.v2.TODO
 import lesson1.task1.sqr
 import java.lang.Math.pow
+import kotlin.math.abs
 import kotlin.math.max
 import kotlin.math.min
 import kotlin.math.sqrt
@@ -79,7 +80,7 @@ fun digitNumber(n: Int): Int {
     do {
         number /= 10
         digits++
-    } while (number > 0)
+    } while (abs(number) > 0)
     return digits
 }
 
