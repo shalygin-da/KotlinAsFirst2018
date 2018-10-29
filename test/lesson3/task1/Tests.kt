@@ -100,6 +100,7 @@ class Tests {
         assertEquals(2089830349, lcm(23579, 88631))
         assertEquals(2022222222, lcm(2, 1011111111))
         assertEquals(2022222222, lcm(1011111111, 2))
+        assertEquals(109901, lcm(9991, 11))
     }
 
     @Test
@@ -128,6 +129,7 @@ class Tests {
         assertEquals(1, maxDivisor(2124679))
         assertEquals(1, maxDivisor(1073676287))
         assertEquals(1, maxDivisor(Int.MAX_VALUE))
+        assertEquals(1, maxDivisor(99991))
     }
 
     @Test
@@ -153,6 +155,7 @@ class Tests {
         assertFalse(squareBetweenExists(999, 1001))
         assertTrue(squareBetweenExists(152374337, 152423715))
         assertFalse(squareBetweenExists(2147395601, Int.MAX_VALUE))
+        assertTrue(squareBetweenExists(10000, 10000))
     }
 
     @Test

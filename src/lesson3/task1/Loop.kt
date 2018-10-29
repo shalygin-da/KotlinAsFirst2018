@@ -93,10 +93,9 @@ fun digitNumber(n: Int): Int {
 fun fib(n: Int): Int {
     var fib = 1
     var fibPrev = 1
-    var fibAid: Int
     if (n in 1..2) return 1
     else for (i in (3..n)) {
-        fibAid = fib + fibPrev
+        val fibAid = fib + fibPrev
         fibPrev = fib
         fib = fibAid
     }
@@ -110,17 +109,22 @@ fun fib(n: Int): Int {
  * минимальное число k, которое делится и на m и на n без остатка
  */
 fun lcm(m: Int, n: Int): Int {
-    var numN = n
-    var numM = m
-    var answer = 1
-    for (k in 2..max(m, n)) {
-        while ((numN % k == 0) && (numM % k == 0)) {
-            answer *= k
-            numM /= k
-            numN /= k
+    when {m % n == 0 || n % m == 0 -> return max(m, n)
+        isPrime(m) || isPrime(n) -> return m * n
+        else -> {
+            var numN = n
+            var numM = m
+            var answer = 1
+            for (k in 2..max(m, n)) {
+                while ((numN % k == 0) && (numM % k == 0)) {
+                    answer *= k
+                    numM /= k
+                    numN /= k
+                }
+            }
+            return answer * numM * numN
         }
     }
-    return answer * numM * numN
 }
 
 
@@ -130,14 +134,10 @@ fun lcm(m: Int, n: Int): Int {
  * Для заданного числа n > 1 найти минимальный делитель, превышающий 1
  */
 fun minDivisor(n: Int): Int {
-    var div = n
     for (i in (2..sqrt(n.toDouble()).toInt())) {
-        if (n % i == 0) {
-            div = i
-            break
-        } else continue
+        if (n % i == 0) return i
     }
-    return div
+    return n
 }
 
 /**
@@ -146,14 +146,12 @@ fun minDivisor(n: Int): Int {
  * Для заданного числа n > 1 найти максимальный делитель, меньший n
  */
 fun maxDivisor(n: Int): Int {
-    var div = 1
-    for (i in (n - 1 downTo (sqrt(n.toDouble()).toInt()))) {
-        if (n % i == 0) {
-            div = i
-            break
-        } else continue
+    if (isPrime(n)) return 1 else {
+        for (i in (n - 1 downTo (sqrt(n.toDouble()).toInt()))) {
+            if (n % i == 0) return i
+        }
     }
-    return div
+    return 1
 }
 
 /**
@@ -174,10 +172,10 @@ fun isCoPrime(m: Int, n: Int): Boolean =
  * Например, для интервала 21..28 21 <= 5*5 <= 28, а для интервала 51..61 квадрата не существует.
  */
 fun squareBetweenExists(m: Int, n: Int): Boolean {
-    for (i in 0..sqrt(n.toDouble()).toInt()) {
+    for (i in sqrt(m.toDouble()).toInt()..sqrt(n.toDouble()).toInt()) {
         if (sqr(i) in m..n) {
             return true
-        } else continue
+        }
     }
     return false
 }
@@ -204,11 +202,10 @@ fun collatzSteps(x: Int): Int {
     while (xStep > 1) {
         if (xStep % 2 == 0) {
             xStep /= 2
-            stepCount += 1
         } else {
             xStep = 3 * xStep + 1
-            stepCount += 1
         }
+        stepCount += 1
     }
     return stepCount
 }
@@ -271,15 +268,14 @@ fun isPalindrome(n: Int): Boolean =
  */
 fun hasDifferentDigits(n: Int): Boolean {
     var number = n
-    var firstDigit: Int
+    val firstDigit = number % 10
     var nextDigit: Int
     while (digitNumber(number) > 1) {
-        firstDigit = number % 10
         number /= 10
         nextDigit = number % 10
         if (firstDigit != nextDigit) {
             return true
-        } else continue
+        }
     }
     return false
 }

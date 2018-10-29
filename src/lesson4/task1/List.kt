@@ -2,7 +2,9 @@
 
 package lesson4.task1
 
+import javafx.beans.binding.Bindings.isEmpty
 import lesson1.task1.discriminant
+import java.lang.Math.pow
 import kotlin.math.sqrt
 
 /**
@@ -115,14 +117,29 @@ fun buildSumExample(list: List<Int>) = list.joinToString(separator = " + ", post
  * по формуле abs = sqrt(a1^2 + a2^2 + ... + aN^2).
  * Модуль пустого вектора считать равным 0.0.
  */
-fun abs(v: List<Double>): Double = TODO()
+fun abs(v: List<Double>): Double {  // 4 урок позже закину полностью, начал выполнение задач заранее
+    var sum = 0.0
+    for (i in 0 until v.size) {
+        sum += pow(v[i], 2.0)
+    }
+    return sqrt(sum)
+}
 
 /**
  * Простая
  *
  * Рассчитать среднее арифметическое элементов списка list. Вернуть 0.0, если список пуст
  */
-fun mean(list: List<Double>): Double = TODO()
+fun mean(list: List<Double>): Double {
+    if (list.isEmpty()) return 0.0
+    else {
+        var sum = 0.0
+        for (i in 0 until list.size) {
+            sum += list[i]
+        }
+        return sum / list.size
+    }
+}
 
 /**
  * Средняя
