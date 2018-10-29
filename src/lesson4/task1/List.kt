@@ -117,7 +117,7 @@ fun buildSumExample(list: List<Int>) = list.joinToString(separator = " + ", post
  * по формуле abs = sqrt(a1^2 + a2^2 + ... + aN^2).
  * Модуль пустого вектора считать равным 0.0.
  */
-fun abs(v: List<Double>): Double {  // 4 урок позже закину полностью, начал выполнение задач заранее
+fun abs(v: List<Double>): Double { // 4 урок позже закину полностью в новый сабмишн
     var sum = 0.0
     for (i in 0 until v.size) {
         sum += pow(v[i], 2.0)
