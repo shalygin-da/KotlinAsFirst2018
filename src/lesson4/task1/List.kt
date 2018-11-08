@@ -131,8 +131,9 @@ fun abs(v: List<Double>): Double {
  *
  * Рассчитать среднее арифметическое элементов списка list. Вернуть 0.0, если список пуст
  */
-fun mean(list: List<Double>): Double = if (list.isEmpty()) 0.0
-else list.sum() / list.size
+fun mean(list: List<Double>): Double =
+        if (list.isEmpty()) 0.0
+        else list.sum() / list.size
 
 /**
  * Средняя
@@ -143,10 +144,8 @@ else list.sum() / list.size
  * Обратите внимание, что данная функция должна изменять содержание списка list, а не его копии.
  */
 fun center(list: MutableList<Double>): MutableList<Double> {
-    if (list.isNotEmpty()) {
-        val listCenter = list.sum() / list.size
-        for (i in 0 until list.size) list[i] -= listCenter
-    }
+    val listCenter = list.sum() / list.size
+    for (i in 0 until list.size) list[i] -= listCenter
     return list
 }
 
@@ -158,12 +157,9 @@ fun center(list: MutableList<Double>): MutableList<Double> {
  * C = a1b1 + a2b2 + ... + aNbN. Произведение пустых векторов считать равным 0.0.
  */
 fun times(a: List<Double>, b: List<Double>): Double {
-    if (a.isEmpty() && b.isEmpty()) return 0.0
-    else {
-        var c = 0.0
-        for (i in 0 until a.size) c += (a[i] * b[i])
-        return c
-    }
+    var c = 0.0
+    for (i in 0 until a.size) c += (a[i] * b[i])
+    return c
 }
 
 /**
@@ -194,9 +190,7 @@ fun polynom(p: List<Double>, x: Double): Double {
  * Обратите внимание, что данная функция должна изменять содержание списка list, а не его копии.
  */
 fun accumulate(list: MutableList<Double>): MutableList<Double> {
-    if (list.isNotEmpty()) {
-        for (i in 1 until list.size) list[i] += list[i - 1]
-    }
+    for (i in 1 until list.size) list[i] += list[i - 1]
     return list
 }
 
@@ -208,20 +202,17 @@ fun accumulate(list: MutableList<Double>): MutableList<Double> {
  * Множители в списке должны располагаться по возрастанию.
  */
 fun factorize(n: Int): List<Int> {
-    if (isPrime(n)) return listOf(n)
-    else {
-        var number = n
-        val list = mutableListOf<Int>()
-        var factor = 2
-        while (factor > 1) {
-            if (number % factor != 0) factor += 1
-            else {
-                number /= factor
-                list.add(factor)
-            }
+    var number = n
+    val list = mutableListOf<Int>()
+    var factor = 2
+    while (number > 1) {
+        if (number % factor != 0) factor += 1
+        else {
+            number /= factor
+            list.add(factor)
         }
-        return list.sorted()
     }
+    return list.sorted()
 }
 
 /**
