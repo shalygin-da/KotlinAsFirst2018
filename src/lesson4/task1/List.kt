@@ -171,12 +171,9 @@ fun times(a: List<Double>, b: List<Double>): Double {
  * Значение пустого многочлена равно 0.0 при любом x.
  */
 fun polynom(p: List<Double>, x: Double): Double {
-    if (p.isEmpty()) return 0.0
-    else {
-        var poly = p[0]
-        for (i in 1 until p.size) poly += p[i] * pow(x, i.toDouble())
-        return poly
-    }
+    var poly = 0.0
+    for (i in 0 until p.size) poly += p[i] * pow(x, i.toDouble())
+    return poly
 }
 
 /**
@@ -212,7 +209,7 @@ fun factorize(n: Int): List<Int> {
             list.add(factor)
         }
     }
-    return list.sorted()
+    return list
 }
 
 /**
@@ -234,12 +231,14 @@ fun factorizeToString(n: Int): String = factorize(n).joinToString(separator = "*
 fun convert(n: Int, base: Int): List<Int> {
     var number = n
     val list = mutableListOf<Int>()
-    while (number > 0) {
-        list.add(number % base)
-        number /= base
+    return if (number == 0) listOf(0)
+    else {
+        while (number > 0) {
+            list.add(number % base)
+            number /= base
+        }
+        list.reversed()
     }
-    if (list.isEmpty()) return listOf(0)
-    else return list.reversed()
 }
 
 /**

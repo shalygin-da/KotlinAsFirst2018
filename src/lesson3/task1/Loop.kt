@@ -115,7 +115,8 @@ fun lcm(m: Int, n: Int): Int {
         if (moduloM > moduloN) moduloM %= moduloN
         else moduloN %= moduloM
     }
-    return (m * n) / (moduloM + moduloN)
+    val sum = moduloM + moduloN
+    return m / sum * n
 }
 
 
