@@ -2,6 +2,9 @@
 
 package lesson6.task1
 
+import kotlinx.html.InputType
+import java.lang.IllegalArgumentException
+
 /**
  * Пример
  *
@@ -71,7 +74,58 @@ fun main(args: Array<String>) {
  * Обратите внимание: некорректная с точки зрения календаря дата (например, 30.02.2009) считается неверными
  * входными данными.
  */
-fun dateStrToDigit(str: String): String = TODO()
+fun daysInMonth2(month: Int, year: Int): Int = when {
+    year % 100 == 0 && year % 400 != 0 && month == 2 -> 28
+    year % 4 == 0 && month == 2 -> 29
+    month == 2 -> 28
+    month % 2 == 0 && month in 1..7 -> 30
+    month % 2 != 0 && month in 1..7 -> 31
+    month % 2 == 0 && month in 8..12 -> 31
+    else -> 30
+}
+
+fun monthConvert(str: String): Int = when (str) {
+    "января" -> 1
+    "февраля" -> 2
+    "марта" -> 3
+    "апреля" -> 4
+    "мая" -> 5
+    "июня" -> 6
+    "июля" -> 7
+    "августа" -> 8
+    "сентября" -> 9
+    "октября" -> 10
+    "ноября" -> 11
+    "декабря" -> 12
+    else -> throw IllegalArgumentException()
+}
+
+fun dateStrToDigit(str: String): String {
+    try {
+        val parts = str.split(" ")
+        val day = parts[0].toInt()
+        val month = monthConvert(parts[1])
+        val year = parts[2].toInt()
+
+        if (day !in 1..daysInMonth2(month, year)) {
+            throw IllegalArgumentException()
+        }
+
+        return String.format("%02d.%02d.%d", day, month, year)
+    }
+
+    catch (e: NumberFormatException) {
+        return ""
+    }
+
+    catch (e:IllegalArgumentException) {
+        return ""
+    }
+
+    catch (e: IndexOutOfBoundsException) {
+        return ""
+    }
+}
 
 /**
  * Средняя
@@ -83,7 +137,42 @@ fun dateStrToDigit(str: String): String = TODO()
  * Обратите внимание: некорректная с точки зрения календаря дата (например, 30 февраля 2009) считается неверными
  * входными данными.
  */
-fun dateDigitToStr(digital: String): String = TODO()
+
+
+
+fun monthConvertReverse(str: String): String = when (str) { //не закончено
+    "01" -> "января"
+    "02" -> "февраля"
+    "03" -> "марта"
+    "04" -> "апреля"
+    "05" -> "мая"
+    "06" -> "июня"
+    "07" -> "июля"
+    "08" -> "августа"
+    "09" -> "сентября"
+    "10" -> "октября"
+    "11" -> "ноября"
+    "12" -> "декабря"
+    else -> throw IllegalArgumentException()
+}
+
+fun dateDigitToStr(digital: String): String {
+    try {
+        val parts = digital.split(".")
+        val day = parts[0]
+        val month = monthConvertReverse(parts[1])
+        val year = parts[2]
+
+        return String.format("%02d %d %d", day, month, year)
+    }
+
+    catch (e: IllegalArgumentException) {
+        return ""
+}
+    catch (e: IndexOutOfBoundsException) {
+        return ""
+    }
+}
 
 /**
  * Средняя
