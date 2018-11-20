@@ -95,16 +95,16 @@ fun buildWordSet(text: List<String>): MutableSet<String> {
  *   ) -> mapOf("Emergency" to "112, 911", "Police" to "02")
  */
 fun mergePhoneBooks(mapA: Map<String, String>, mapB: Map<String, String>): Map<String, String> {
-    val res = mutableMapOf<String, String>()
-    res.putAll(mapA)
+    val answer = mutableMapOf<String, String>()
+    answer.putAll(mapA)
     for ((name, number) in mapB) {
-        if (res[name] == null) res[name] = number
-        else if (res[name] != number) {
-            val temp = res[name] + ", " + number
-            res[name] = temp
+        if (answer[name] == null) answer[name] = number
+        else if (answer[name] != number) {
+            val temp = answer[name] + ", " + number
+            answer[name] = temp
         }
     }
-    return res
+    return answer
 }
 
 /**
@@ -118,14 +118,14 @@ fun mergePhoneBooks(mapA: Map<String, String>, mapB: Map<String, String>): Map<S
  *     -> mapOf(5 to listOf("Семён", "Михаил"), 3 to listOf("Марат"))
  */
 fun buildGrades(grades: Map<String, Int>): Map<Int, List<String>> {
-    val res = mutableMapOf<Int, MutableList<String>>()
+    val answer = mutableMapOf<Int, MutableList<String>>()
     for ((name, grade) in grades) {
-        var names = res[grade]
+        var names = answer[grade]
         if (names == null) names = mutableListOf(name)
         else names.add(name)
-        res[grade] = names
+        answer[grade] = names
     }
-    return res
+    return answer
 }
 
 /**
@@ -241,7 +241,7 @@ fun whoAreInBoth(a: List<String>, b: List<String>): List<String> = a.filter { b.
  * Например:
  *   canBuildFrom(listOf('a', 'b', 'o'), "baobab") -> true
  */
-fun canBuildFrom(chars: List<Char>, word: String): Boolean = TODO()
+fun canBuildFrom(chars: List<Char>, word: String): Boolean = chars.toSet() == word.toSet()
 
 /**
  * Средняя
@@ -255,7 +255,13 @@ fun canBuildFrom(chars: List<Char>, word: String): Boolean = TODO()
  * Например:
  *   extractRepeats(listOf("a", "b", "a")) -> mapOf("a" to 2)
  */
-fun extractRepeats(list: List<String>): Map<String, Int> = TODO()
+fun extractRepeats(list: List<String>): Map<String, Int> {
+    val answer = mutableMapOf<String, Int>()
+    for (key in list) {
+        answer[key] = (answer[key] ?: 0) + 1
+    }
+    return answer.filter { it.value > 1 }
+}
 
 /**
  * Средняя
