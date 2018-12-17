@@ -3,6 +3,7 @@ package lesson8.task1
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Tag
 import org.junit.jupiter.api.Test
+import java.lang.IllegalArgumentException
 import java.lang.Math.ulp
 import kotlin.math.PI
 import kotlin.math.abs

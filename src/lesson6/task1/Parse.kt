@@ -3,6 +3,7 @@
 package lesson6.task1
 
 import kotlinx.html.InputType
+import lesson2.task2.daysInMonth
 import java.lang.IllegalArgumentException
 
 /**
@@ -74,16 +75,6 @@ fun main(args: Array<String>) {
  * Обратите внимание: некорректная с точки зрения календаря дата (например, 30.02.2009) считается неверными
  * входными данными.
  */
-fun daysInMonth2(month: Int, year: Int): Int = when {
-    year % 100 == 0 && year % 400 != 0 && month == 2 -> 28
-    year % 4 == 0 && month == 2 -> 29
-    month == 2 -> 28
-    month % 2 == 0 && month in 1..7 -> 30
-    month % 2 != 0 && month in 1..7 -> 31
-    month % 2 == 0 && month in 8..12 -> 31
-    else -> 30
-}
-
 fun monthConvert(str: String): Int = when (str) {
     "января" -> 1
     "февраля" -> 2
@@ -103,26 +94,18 @@ fun monthConvert(str: String): Int = when (str) {
 fun dateStrToDigit(str: String): String {
     try {
         val parts = str.split(" ")
+        if (parts.size != 3) return ""
         val day = parts[0].toInt()
         val month = monthConvert(parts[1])
         val year = parts[2].toInt()
-
-        if (day !in 1..daysInMonth2(month, year)) {
-            throw IllegalArgumentException()
+        if (day !in 1..daysInMonth(month, year)) {
+            return ""
         }
 
         return String.format("%02d.%02d.%d", day, month, year)
-    }
-
-    catch (e: NumberFormatException) {
+    } catch (e: NumberFormatException) {
         return ""
-    }
-
-    catch (e:IllegalArgumentException) {
-        return ""
-    }
-
-    catch (e: IndexOutOfBoundsException) {
+    } catch (e: IllegalArgumentException) {
         return ""
     }
 }
@@ -140,7 +123,7 @@ fun dateStrToDigit(str: String): String {
 
 
 
-fun monthConvertReverse(month: String): String = when (month) { //не закончено
+fun monthConvertReverse(month: String): String = when (month) {
     "01" -> "января"
     "02" -> "февраля"
     "03" -> "марта"
@@ -159,23 +142,14 @@ fun monthConvertReverse(month: String): String = when (month) { //не зако�
 fun dateDigitToStr(digital: String): String {
     try {
         val parts = digital.split(".")
-        if (parts.size != 3) throw Exception()
+        if (parts.size != 3) return ""
         val day = parts[0].toInt()
         val month = monthConvertReverse(parts[1])
         val year = parts[2].toInt()
-
         return String.format("%d %s %d", day, month, year)
-    }
-
-    catch (e: Exception) {
+    } catch (e: NumberFormatException) {
         return ""
-    }
-
-    catch (e: NumberFormatException) {
-        return ""
-    }
-
-    catch (e: IndexOutOfBoundsException) {
+    } catch (e: IllegalArgumentException) {
         return ""
     }
 }
@@ -193,7 +167,7 @@ fun dateDigitToStr(digital: String): String {
  * При неверном формате вернуть пустую строку
  */
 fun flattenPhoneNumber(phone: String): String =
-        if (phone.contains(Regex("""[^\d\s\-()+]"""))) ""
+        if (!phone.matches(Regex("""^(?:\+\d+)?[-\s]*(?:\([\s-]*\d+[\s-]*\))?[-\s]*\d[-\d\s]*$"""))) ""
         else Regex("""[()\-\s]""").replace(phone, "")
 
 /**
@@ -221,7 +195,8 @@ fun bestLongJump(jumps: String): Int =
  * При нарушении формата входной строки вернуть -1.
  */
 fun bestHighJump(jumps: String): Int = jumps.split(Regex("""(?<=[-%+])\s"""))
-        .filter { it.contains("+") }.map { it.split(" ")[0].toInt() }.max() ?: -1
+        .filter { it.contains("+") }
+        .map { it.split(" ")[0].toInt() }.max() ?: -1
 
 /**
  * Сложная
