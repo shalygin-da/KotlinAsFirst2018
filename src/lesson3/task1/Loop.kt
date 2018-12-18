@@ -274,7 +274,18 @@ fun hasDifferentDigits(n: Int): Boolean {
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun squareSequenceDigit(n: Int): Int = kotlin.TODO()
+fun squareSequenceDigit(n: Int): Int {
+    if (n == 1) return 1
+    var position = 1
+    var sqrN = 1
+    var aidN = 1
+    while (position < n) {
+        aidN++
+        sqrN = sqr(aidN)
+        position += digitNumber(sqrN)
+    }
+    return (sqrN / pow(10.0, (position - n).toDouble()) % 10).toInt()
+}
 
 /**
  * Сложная
@@ -285,4 +296,15 @@ fun squareSequenceDigit(n: Int): Int = kotlin.TODO()
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun fibSequenceDigit(n: Int): Int = kotlin.TODO()
+fun fibSequenceDigit(n: Int): Int {
+    if (n == 1) return 1
+    var position = 1
+    var fibN = 1
+    var aidN = 1
+    while (position < n) {
+        aidN++
+        fibN = fib(aidN)
+        position += digitNumber(fibN)
+    }
+    return (fibN / pow(10.0, (position - n).toDouble()) % 10).toInt()
+}
