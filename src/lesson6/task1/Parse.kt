@@ -75,28 +75,16 @@ fun main(args: Array<String>) {
  * Обратите внимание: некорректная с точки зрения календаря дата (например, 30.02.2009) считается неверными
  * входными данными.
  */
-fun monthConvert(str: String): Int = when (str) {
-    "января" -> 1
-    "февраля" -> 2
-    "марта" -> 3
-    "апреля" -> 4
-    "мая" -> 5
-    "июня" -> 6
-    "июля" -> 7
-    "августа" -> 8
-    "сентября" -> 9
-    "октября" -> 10
-    "ноября" -> 11
-    "декабря" -> 12
-    else -> throw IllegalArgumentException()
-}
 
 fun dateStrToDigit(str: String): String {
     try {
         val parts = str.split(" ")
         if (parts.size != 3) return ""
         val day = parts[0].toInt()
-        val month = monthConvert(parts[1])
+        val monthConvert = listOf("января", "февраля", "марта", "апреля", "мая", "июня", "июля", "августа", "сентября",
+                "октября", "ноября", "декабря")
+        if (monthConvert.indexOf(parts[1]) == -1) return ""
+        val month = monthConvert.indexOf(parts[1]) + 1
         val year = parts[2].toInt()
         if (day !in 1..daysInMonth(month, year)) {
             return ""
@@ -121,30 +109,14 @@ fun dateStrToDigit(str: String): String {
  * входными данными.
  */
 
-
-
-fun monthConvertReverse(month: String): String = when (month) {
-    "01" -> "января"
-    "02" -> "февраля"
-    "03" -> "марта"
-    "04" -> "апреля"
-    "05" -> "мая"
-    "06" -> "июня"
-    "07" -> "июля"
-    "08" -> "августа"
-    "09" -> "сентября"
-    "10" -> "октября"
-    "11" -> "ноября"
-    "12" -> "декабря"
-    else -> throw IllegalArgumentException()
-}
-
 fun dateDigitToStr(digital: String): String {
     try {
         val parts = digital.split(".")
         if (parts.size != 3) return ""
         val day = parts[0].toInt()
-        val month = monthConvertReverse(parts[1])
+        val monthConvertReverse = listOf("января", "февраля", "марта", "апреля", "мая", "июня", "июля", "августа", "сентября",
+                "октября", "ноября", "декабря")
+        val month = monthConvertReverse[parts[1].toInt() - 1]
         val year = parts[2].toInt()
         return String.format("%d %s %d", day, month, year)
     } catch (e: NumberFormatException) {

@@ -125,7 +125,7 @@ fun centerFile(inputName: String, outputName: String) {
         output.write(line)
         output.newLine()
     }
-output.close()
+    output.close()
 }
 
 /**
@@ -156,10 +156,7 @@ output.close()
  * 8) Если входной файл удовлетворяет требованиям 1-7, то он должен быть в точности идентичен выходному файлу
  */
 fun alignFileByWidth(inputName: String, outputName: String) {
-    var max = 0
-    var input = File(inputName).readLines().map { it.trim() }.maxBy { it.length }
-    val output = File(outputName).bufferedWriter()
-
+    TODO()
 }
 
 /**
@@ -247,7 +244,7 @@ fun transliterate(inputName: String, dictionary: Map<Char, String>, outputName: 
  */
 fun chooseLongestChaoticWord(inputName: String, outputName: String) {
     var answer = File(inputName).readLines().toList()
-    answer = answer.filter { it.toLowerCase().toCharArray().toSet().size == it.length }
+    answer = answer.filter { it.toLowerCase().toSet().size == it.length }
     val maxChars = answer.map { it.length }.max()
     File(outputName).writeText(answer.filter { it.length == maxChars }.joinToString())
 }
